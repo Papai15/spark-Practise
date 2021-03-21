@@ -10,19 +10,19 @@ object BigBashLeague {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder().master("local[2]").appName("BigBashLeague").getOrCreate()
 
-    val ballByballDF = spark.read.option("inferschema","true").option("header","true")
+    val ballByballDF = spark.read.option("inferSchema","true").option("header","true")
         .csv("B:/Big data/SparkScala/SparkScala/ballByball.csv")
 
-    val cleanedBallByballDF = ballByballDF.drop("extras_byes","extras_legbyes","extras_noballs","extras_wides","wicket_fielders","wicket_kind")
+    val cleanedBallByBallDF = ballByballDF.drop("extras_byes","extras_legbyes","extras_noballs","extras_wides","wicket_fielders","wicket_kind")
       .drop("MatchID","value replacements_match","value runs_non_boundary","replacements_role", "L9 replacements_role","value replacements_role")
-    // cleanedBallByballDF.show
+    // cleanedBallByBallDF.show
 
-    val matchDF = spark.read.option("inferschema","true").option("header","true")
+    val matchDF = spark.read.option("inferSchema","true").option("header","true")
         .csv("B:/Big data/SparkScala/SparkScala/Match.csv")
 
     // matchDF.show
 
-    val matchBallDF = cleanedBallByballDF.join(broadcast(matchDF),cleanedBallByballDF("Match_ID") === matchDF("MatchID"))
+    val matchBallDF = cleanedBallByBallDF.join(broadcast(matchDF),cleanedBallByBallDF("Match_ID") === matchDF("MatchID"))
         .drop("Match_date","Match_ID","MatchDateSK","Innings","InningsDesc","Over","Winning_Team","non_striker","runs_batsman","runs_extras")
 
     import spark.implicits._

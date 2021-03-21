@@ -9,7 +9,9 @@ object certification {
 
   def main(args: Array[String]): Unit = {
 
-    val spark = SparkSession.builder().appName("databricks_certification").master("local[2]").getOrCreate()
+    val spark = SparkSession.builder
+                .appName("databricks_certification")
+                .master("local[2]").getOrCreate
     import spark.implicits._
 
     val peopleRDD = spark.sparkContext.parallelize(Seq(
