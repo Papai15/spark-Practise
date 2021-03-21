@@ -1,6 +1,5 @@
 import org.apache.spark.sql._
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
-
 import scala.collection.mutable
 
   class WordCountUnitTest extends FunSuite with BeforeAndAfterEach {
@@ -12,8 +11,8 @@ import scala.collection.mutable
     }
 
     test("testing the wordcount program") {
-      val myrdd = spark.sparkContext.parallelize(List("This cat is hat","that mat is not cat","this hat"))
-      val actualRDD = WordCount.wordCountFunc(myrdd) collect
+      val myRdd = spark.sparkContext.parallelize(List("This cat is hat","that mat is not cat","this hat"))
+      val actualRDD = WordCount.wordCountFunc(myRdd) collect
       val myMap = new mutable.HashMap[String,Int]()
 
       actualRDD.foreach(x=>myMap.put(x._1,x._2))
